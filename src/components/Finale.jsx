@@ -23,6 +23,7 @@ const SlideImg = styled(motion.img)`
   width: 100%;
   height: 100%;
   object-fit: cover;
+  object-position: ${(props) => props.$position || 'center 30%'};
 `
 
 const Vignette = styled.div`
@@ -70,6 +71,64 @@ const HeaderWrap = styled.div`
   padding: 0 24px;
 `
 
+function filmReelBurst() {
+  const colors = ['#ff8fab', '#e8c27a', '#fdf6ec', '#e0507a']
+
+  // "Arroz": ráfaga de partículas pequeñas y claras, como al salir de la boda.
+  confetti({
+    particleCount: 120,
+    spread: 130,
+    startVelocity: 38,
+    gravity: 0.9,
+    scalar: 0.55,
+    origin: { y: 0.35 },
+    colors: ['#fdf6ec', '#f3dfb0'],
+    shapes: ['circle'],
+  })
+
+  // Confeti clásico dorado/rosa.
+  confetti({
+    particleCount: 90,
+    spread: 110,
+    startVelocity: 42,
+    origin: { y: 0.4 },
+    colors,
+    shapes: ['square', 'circle'],
+    scalar: 0.9,
+  })
+
+  // Corazones y destellos flotando hacia arriba.
+  try {
+    const heart = confetti.shapeFromText({ text: '❤️', scalar: 3.2 })
+    const sparkle = confetti.shapeFromText({ text: '✨', scalar: 3 })
+    const ring = confetti.shapeFromText({ text: '💍', scalar: 3.4 })
+
+    confetti({
+      particleCount: 26,
+      spread: 100,
+      startVelocity: 32,
+      gravity: 0.6,
+      origin: { y: 0.45 },
+      shapes: [heart, sparkle],
+      scalar: 1,
+    })
+
+    setTimeout(() => {
+      confetti({
+        particleCount: 10,
+        spread: 70,
+        startVelocity: 28,
+        gravity: 0.6,
+        origin: { y: 0.4 },
+        shapes: [ring],
+        scalar: 1,
+      })
+    }, 350)
+  } catch {
+    // Si el navegador no soporta shapeFromText, el confeti clásico ya cubrió el destello.
+  }
+}
+
 function useActiveLyric(audioRef) {
   const [index, setIndex] = useState(-1)
   useEffect(() => {
@@ -102,13 +161,7 @@ export default function Finale({ audioRef }) {
   )
 
   useEffect(() => {
-    confetti({
-      particleCount: 160,
-      spread: 110,
-      startVelocity: 45,
-      origin: { y: 0.55 },
-      colors: ['#ff8fab', '#e8c27a', '#fdf6ec', '#e0507a'],
-    })
+    filmReelBurst()
   }, [])
 
   useEffect(() => {
@@ -148,7 +201,8 @@ export default function Finale({ audioRef }) {
         <AnimatePresence>
           <SlideImg
             key={slide}
-            src={PHOTOS[slide]}
+            src={PHOTOS[slide].src}
+            $position={PHOTOS[slide].position}
             initial={{ opacity: 0, scale: 1.05 }}
             animate={{ opacity: 1, scale: 1.16 }}
             exit={{ opacity: 0 }}
