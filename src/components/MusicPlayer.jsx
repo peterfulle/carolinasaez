@@ -1,6 +1,6 @@
-import { forwardRef, useImperativeHandle, useRef, useState } from 'react'
+import { useState } from 'react'
 import styled from '@emotion/styled'
-import { motion, AnimatePresence } from 'framer-motion'
+import { motion } from 'framer-motion'
 import { theme } from '../theme.js'
 
 const ToggleButton = styled(motion.button)`
@@ -29,21 +29,8 @@ const Bar = styled(motion.span)`
   margin: 0 1px;
 `
 
-const MusicPlayer = forwardRef(function MusicPlayer(_, ref) {
-  const audioRef = useRef(null)
+export default function MusicPlayer({ audioRef, playing }) {
   const [muted, setMuted] = useState(false)
-  const [playing, setPlaying] = useState(false)
-
-  useImperativeHandle(ref, () => ({
-    start() {
-      const el = audioRef.current
-      if (!el) return
-      el.volume = 0.55
-      el.play()
-        .then(() => setPlaying(true))
-        .catch(() => setPlaying(false))
-    },
-  }))
 
   const toggleMute = () => {
     const el = audioRef.current
@@ -53,34 +40,29 @@ const MusicPlayer = forwardRef(function MusicPlayer(_, ref) {
   }
 
   return (
-    <>
-      <audio ref={audioRef} src="/music/proposal-song.mp3" loop preload="auto" />
-      <ToggleButton
-        onClick={toggleMute}
-        whileTap={{ scale: 0.9 }}
-        aria-label={muted ? 'Activar música' : 'Silenciar música'}
-        title={muted ? 'Activar música' : 'Silenciar música'}
-      >
-        {muted ? (
-          '🔇'
-        ) : (
-          <span style={{ display: 'flex', alignItems: 'center', height: 16 }}>
-            {[0, 1, 2].map((i) => (
-              <Bar
-                key={i}
-                animate={playing ? { height: [6, 16, 8, 14, 6] } : { height: 6 }}
-                transition={{
-                  duration: 1 + i * 0.2,
-                  repeat: Infinity,
-                  ease: 'easeInOut',
-                }}
-              />
-            ))}
-          </span>
-        )}
-      </ToggleButton>
-    </>
+    <ToggleButton
+      onClick={toggleMute}
+      whileTap={{ scale: 0.9 }}
+      aria-label={muted ? 'Activar música' : 'Silenciar música'}
+      title={muted ? 'Activar música' : 'Silenciar música'}
+    >
+      {muted ? (
+        '🔇'
+      ) : (
+        <span style={{ display: 'flex', alignItems: 'center', height: 16 }}>
+          {[0, 1, 2].map((i) => (
+            <Bar
+              key={i}
+              animate={playing ? { height: [6, 16, 8, 14, 6] } : { height: 6 }}
+              transition={{
+                duration: 1 + i * 0.2,
+                repeat: Infinity,
+                ease: 'easeInOut',
+              }}
+            />
+          ))}
+        </span>
+      )}
+    </ToggleButton>
   )
-})
-
-export default MusicPlayer
+}

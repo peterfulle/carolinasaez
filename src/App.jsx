@@ -6,24 +6,56 @@ import Intro from './components/Intro.jsx'
 import LoveMeter from './components/LoveMeter.jsx'
 import LoveQuestions from './components/LoveQuestions.jsx'
 import SurpriseBox from './components/SurpriseBox.jsx'
+import Finale from './components/Finale.jsx'
 
 export default function App() {
   const [step, setStep] = useState('intro')
-  const musicRef = useRef(null)
+  const [playing, setPlaying] = useState(false)
+  const audioRef = useRef(null)
 
   const goTo = (next) => setStep(next)
 
+  const startAmbient = () => {
+    const el = audioRef.current
+    if (!el) return
+    el.volume = 0.22
+    el.currentTime = 0
+    el.play()
+      .then(() => setPlaying(true))
+      .catch(() => setPlaying(false))
+  }
+
+  const swellFinale = () => {
+    const el = audioRef.current
+    if (!el) return
+    el.currentTime = 0
+    el.volume = 0.85
+    el.play()
+      .then(() => setPlaying(true))
+      .catch(() => setPlaying(false))
+  }
+
   return (
     <>
+      <audio
+        ref={audioRef}
+        src="/music/proposal-song.mp3"
+        preload="auto"
+        onEnded={(e) => {
+          if (step === 'finale') return
+          e.currentTarget.currentTime = 0
+          e.currentTarget.play().catch(() => {})
+        }}
+      />
       <FloatingHearts />
-      <MusicPlayer ref={musicRef} />
+      <MusicPlayer audioRef={audioRef} playing={playing} />
 
       <AnimatePresence mode="wait">
         {step === 'intro' && (
           <Intro
             key="intro"
             onEnter={() => {
-              musicRef.current?.start()
+              startAmbient()
               goTo('meter')
             }}
           />
@@ -32,7 +64,16 @@ export default function App() {
         {step === 'questions' && (
           <LoveQuestions key="questions" onComplete={() => goTo('box')} />
         )}
-        {step === 'box' && <SurpriseBox key="box" />}
+        {step === 'box' && (
+          <SurpriseBox
+            key="box"
+            onYes={() => {
+              swellFinale()
+              goTo('finale')
+            }}
+          />
+        )}
+        {step === 'finale' && <Finale key="finale" audioRef={audioRef} />}
       </AnimatePresence>
     </>
   )

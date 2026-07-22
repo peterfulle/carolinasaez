@@ -30,22 +30,6 @@ function fireworks() {
   confetti({ particleCount: 140, spread: 100, startVelocity: 45, origin: { y: 0.6 }, colors })
 }
 
-function celebrationBurst() {
-  const colors = ['#ff8fab', '#e8c27a', '#fdf6ec', '#e0507a']
-  let count = 0
-  const id = setInterval(() => {
-    confetti({
-      particleCount: 60,
-      startVelocity: 35,
-      spread: 360,
-      origin: { x: Math.random(), y: Math.random() * 0.4 },
-      colors,
-    })
-    count += 1
-    if (count > 6) clearInterval(id)
-  }, 400)
-}
-
 const BoxWrap = styled(motion.div)`
   position: relative;
   width: 180px;
@@ -132,7 +116,7 @@ const Ring = styled(motion.div)`
   margin-bottom: 4px;
 `
 
-export default function SurpriseBox() {
+export default function SurpriseBox({ onYes }) {
   const [phase, setPhase] = useState('closed')
   const { days, hours } = useCountdown(WEDDING_DATE)
 
@@ -153,23 +137,17 @@ export default function SurpriseBox() {
     setTimeout(() => setPhase('revealed'), 900)
   }
 
-  const sayYes = () => {
-    setPhase('celebration')
-    celebrationBurst()
-  }
-
   return (
     <Stage>
       <AnimatePresence mode="wait">
-        {phase !== 'celebration' ? (
-          <motion.div
-            key="box-scene"
-            initial={{ opacity: 0, y: 24 }}
-            animate={{ opacity: 1, y: 0 }}
-            exit={{ opacity: 0, scale: 0.9 }}
-            transition={{ duration: 0.6 }}
-          >
-            <Card>
+        <motion.div
+          key="box-scene"
+          initial={{ opacity: 0, y: 24 }}
+          animate={{ opacity: 1, y: 0 }}
+          exit={{ opacity: 0, scale: 0.9 }}
+          transition={{ duration: 0.6 }}
+        >
+          <Card>
               {phase !== 'revealed' && (
                 <>
                   <Script style={{ fontSize: 'clamp(28px, 6vw, 40px)' }}>Una última sorpresa…</Script>
@@ -237,39 +215,13 @@ export default function SurpriseBox() {
                   </Serif>
 
                   <div style={{ height: 30 }} />
-                  <PrimaryButton as={motion.button} whileTap={{ scale: 0.95 }} onClick={sayYes}>
+                  <PrimaryButton as={motion.button} whileTap={{ scale: 0.95 }} onClick={onYes}>
                     Sí, quiero 💍
                   </PrimaryButton>
                 </motion.div>
               )}
-            </Card>
-          </motion.div>
-        ) : (
-          <motion.div
-            key="celebration"
-            initial={{ opacity: 0, scale: 0.85 }}
-            animate={{ opacity: 1, scale: 1 }}
-            transition={{ duration: 0.7 }}
-          >
-            <Card>
-              <Ring
-                animate={{ rotate: [0, 360] }}
-                transition={{ duration: 2.5, repeat: Infinity, ease: 'linear' }}
-              >
-                💍
-              </Ring>
-              <Script>¡Ella dijo que SÍ!</Script>
-              <div style={{ height: 12 }} />
-              <Serif>
-                Peter Fulle & Carolina Sáez
-                <br />
-                {formattedDate}
-              </Serif>
-              <div style={{ height: 8 }} />
-              <Serif style={{ fontSize: 16, opacity: 0.8 }}>Para siempre empieza hoy. ✨💗</Serif>
-            </Card>
-          </motion.div>
-        )}
+          </Card>
+        </motion.div>
       </AnimatePresence>
     </Stage>
   )

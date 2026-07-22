@@ -1,0 +1,26 @@
+// Letra adaptada al español, sincronizada con "Until I Found You" — Stephen Sanchez.
+// Tiempos tomados del audio original; el nombre se reemplazó por "Carolina".
+export const LYRICS = [
+  { start: 10.62, text: 'Carolina, envuélveme en tu abrazo' },
+  { start: 17.25, text: 'Te quiero entre mis brazos' },
+  { start: 22.55, text: 'Oh, déjame abrazarte' },
+  { start: 27.78, text: 'Nunca más te dejaré ir, como una vez lo hice' },
+  { start: 33.77, text: 'Antes solía decir' },
+  { start: 37.36, text: '"Nunca volvería a enamorarme, hasta encontrarte a ti"' },
+  { start: 44.57, text: 'Dije: "nunca caería, a menos que fuera por ti"' },
+  { start: 51.56, text: 'Estaba perdido en la oscuridad, y entonces te encontré' },
+  { start: 58.32, text: 'Te encontré a ti' },
+  { start: 67.81, text: 'Carolina, me atrapaste' },
+  { start: 72.55, text: 'Te pedí volver a amarte una vez más' },
+  { start: 79.54, text: 'Tú caíste, y yo te sostuve' },
+  { start: 84.78, text: 'Nunca más te dejaré ir, como una vez lo hice' },
+  { start: 90.75, text: 'Antes solía decir' },
+  { start: 94.29, text: '"Nunca volvería a enamorarme, hasta encontrarte a ti"' },
+  { start: 101.52, text: 'Dije: "nunca caería, a menos que fuera por ti"' },
+  { start: 108.78, text: 'Estaba perdido en la oscuridad, y entonces te encontré' },
+  { start: 115.53, text: 'Te encontré a ti' },
+  { start: 137.08, text: 'Nunca volvería a enamorarme, hasta encontrarte a ti' },
+  { start: 144.25, text: 'Dije: "nunca caería, a menos que fuera por ti"' },
+  { start: 151.23, text: 'Estaba perdido en la oscuridad, y entonces te encontré' },
+  { start: 158.27, text: 'Te encontré a ti, Carolina' },
+]
