@@ -2,7 +2,7 @@ import { useEffect, useMemo, useRef, useState } from 'react'
 import { AnimatePresence, motion } from 'framer-motion'
 import styled from '@emotion/styled'
 import confetti from 'canvas-confetti'
-import { Stage, Card, Script, Serif } from './Shell.jsx'
+import { Stage, Card, Script, Serif, PrimaryButton } from './Shell.jsx'
 import { theme } from '../theme.js'
 import { PHOTOS } from '../data/photos.js'
 import { LYRICS } from '../data/lyrics.js'
@@ -246,6 +246,14 @@ export default function Finale({ audioRef }) {
                 <Serif style={{ fontSize: 16, opacity: 0.85 }}>
                   Para siempre empieza hoy. ✨💗
                 </Serif>
+                <div style={{ height: 26 }} />
+                <PrimaryButton
+                  as={motion.button}
+                  whileTap={{ scale: 0.95 }}
+                  onClick={() => import('../utils/generateLovePdf.js').then((m) => m.generateLovePdf())}
+                >
+                  Descargar nuestro acuerdo 💌
+                </PrimaryButton>
               </Card>
             </motion.div>
           </Stage>

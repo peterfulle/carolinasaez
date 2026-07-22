@@ -6,6 +6,7 @@ import Intro from './components/Intro.jsx'
 import LoveMeter from './components/LoveMeter.jsx'
 import LoveQuestions from './components/LoveQuestions.jsx'
 import SurpriseBox from './components/SurpriseBox.jsx'
+import Vows from './components/Vows.jsx'
 import Finale from './components/Finale.jsx'
 
 export default function App() {
@@ -65,9 +66,12 @@ export default function App() {
           <LoveQuestions key="questions" onComplete={() => goTo('box')} />
         )}
         {step === 'box' && (
-          <SurpriseBox
-            key="box"
-            onYes={() => {
+          <SurpriseBox key="box" onYes={() => goTo('vows')} />
+        )}
+        {step === 'vows' && (
+          <Vows
+            key="vows"
+            onComplete={() => {
               swellFinale()
               goTo('finale')
             }}

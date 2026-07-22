@@ -111,9 +111,24 @@ const CountdownLabel = styled.div`
   margin-top: 2px;
 `
 
-const Ring = styled(motion.div)`
-  font-size: 54px;
-  margin-bottom: 4px;
+const CoupleFrame = styled(motion.div)`
+  width: 190px;
+  height: 230px;
+  margin: 4px auto 18px;
+  border-radius: 16px;
+  padding: 6px;
+  background: linear-gradient(145deg, ${theme.goldSoft}, ${theme.gold});
+  box-shadow: 0 16px 34px rgba(0, 0, 0, 0.35);
+  transform: rotate(-2deg);
+`
+
+const CoupleImg = styled.img`
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  object-position: center 15%;
+  border-radius: 11px;
+  display: block;
 `
 
 export default function SurpriseBox({ onYes }) {
@@ -187,18 +202,24 @@ export default function SurpriseBox({ onYes }) {
                   animate={{ opacity: 1, y: 0 }}
                   transition={{ duration: 0.6 }}
                 >
-                  <Ring
-                    animate={{ rotate: [0, 10, -10, 0], scale: [1, 1.08, 1] }}
-                    transition={{ duration: 3, repeat: Infinity, ease: 'easeInOut' }}
+                  <CoupleFrame
+                    initial={{ opacity: 0, scale: 0.8, rotate: 6 }}
+                    animate={{ opacity: 1, scale: 1, rotate: -2 }}
+                    transition={{ duration: 0.7, delay: 0.1 }}
                   >
-                    💍
-                  </Ring>
+                    <CoupleImg src="/photos/photo-13.jpg" alt="Peter y Carolina" />
+                  </CoupleFrame>
+
                   <Script>Carolina Sáez,</Script>
                   <Script style={{ fontSize: 'clamp(32px, 7vw, 50px)' }}>
                     ¿Quieres casarte conmigo?
                   </Script>
                   <div style={{ height: 14 }} />
                   <Serif>Nos casamos el {formattedDate} 💐</Serif>
+                  <Serif style={{ fontSize: 15, opacity: 0.8, marginTop: 4 }}>
+                    Un 24 de julio, en pleno invierno — la excusa perfecta para abrazarnos
+                    más fuerte. No se me ocurre mejor fecha para empezar nuestra vida de casados.
+                  </Serif>
 
                   <CountdownRow>
                     <div>
