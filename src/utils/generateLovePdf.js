@@ -1,7 +1,7 @@
 import { jsPDF } from 'jspdf'
 import { GREAT_VIBES_BASE64 } from '../assets/greatVibesFont.js'
 import { VOWS } from '../data/vows.js'
-import { PETER_FULL_NAME, PETER_RUT, CAROLINA_FULL_NAME } from '../data/couple.js'
+import { PETER_FULL_NAME, PETER_RUT, CAROLINA_FULL_NAME, CAROLINA_RUT } from '../data/couple.js'
 
 const GOLD = [178, 140, 68]
 const ROSE = [196, 84, 116]
@@ -85,6 +85,9 @@ export function generateLovePdf() {
   })
 
   doc.text(CAROLINA_FULL_NAME, rightX + colW / 2, sigY + 10, { align: 'center' })
+  doc.text(`RUT: ${CAROLINA_RUT || '_______________'}`, rightX + colW / 2, sigY + 15, {
+    align: 'center',
+  })
 
   doc.setFont('Times', 'italic')
   doc.setFontSize(9)
